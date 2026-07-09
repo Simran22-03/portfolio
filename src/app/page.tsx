@@ -14,7 +14,7 @@ export default function Page() {
         <h2 style={styles.logo}>My Portfolio</h2>
 
         <div style={styles.navLinks}>
-          <Link href="/portfolio/home">
+          <Link href="/home">
             <button style={styles.navButton}>Home</button>
           </Link>
 
@@ -43,13 +43,13 @@ export default function Page() {
         </p>
 
         <div style={styles.buttonContainer}>
-          <Link href="/portfolio/home">
+          <Link href="/home">
             <button style={styles.primaryButton}>
               Explore Portfolio
             </button>
           </Link>
 
-          <Link href="/portfolio/about">
+          <Link href="/about">
             <button style={styles.secondaryButton}>
               About Me
             </button>

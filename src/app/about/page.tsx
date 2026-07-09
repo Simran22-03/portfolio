@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CSSProperties } from "react";
 
 const about = {
   name: "Simrandeep Kaur",
@@ -25,20 +26,21 @@ export default function AboutPage() {
         <h2 style={styles.logo}>My Portfolio</h2>
 
         <div style={styles.navLinks}>
-          <Link href="/portfolio">
-            <button style={styles.navButton}>Portfolio</button>
+          <Link href="/" style={styles.navButton}>
+            Portfolio
           </Link>
 
-          <Link href="/portfolio/home">
-            <button style={styles.navButton}>Home</button>
+          <Link href="/home" style={styles.navButton}>
+            Home
           </Link>
 
           <a
             href={about.resume}
             target="_blank"
             rel="noopener noreferrer"
+            style={styles.navButton}
           >
-            <button style={styles.navButton}>Resume</button>
+            Resume
           </a>
         </div>
       </nav>
@@ -51,7 +53,7 @@ export default function AboutPage() {
           <b>{about.branch}</b> student currently pursuing my{" "}
           <b>{about.semester}</b> at Guru Nanak Dev Engineering College,
           Ludhiana. I enjoy building responsive and secure web
-          applications, solving real-world problems and continuously
+          applications, solving real-world problems, and continuously
           learning modern technologies. My goal is to become a skilled
           Full Stack Developer and Software Engineer.
         </p>
@@ -93,16 +95,13 @@ export default function AboutPage() {
               href={about.resume}
               target="_blank"
               rel="noopener noreferrer"
+              style={styles.resumeButton}
             >
-              <button style={styles.resumeButton}>
-                📄 View Resume
-              </button>
+              📄 View Resume
             </a>
 
-            <Link href="/portfolio/home">
-              <button style={styles.button}>
-                🏠 Back to Home
-              </button>
+            <Link href="/home" style={styles.button}>
+              🏠 Back to Home
             </Link>
           </div>
         </div>
@@ -111,11 +110,11 @@ export default function AboutPage() {
   );
 }
 
-const styles = {
+const styles: Record<string, CSSProperties> = {
   page: {
     minHeight: "100vh",
     background: "linear-gradient(135deg,#0f172a,#1e3a8a,#2563eb)",
-    fontFamily: "Arial",
+    fontFamily: "Arial, sans-serif",
     color: "white",
     padding: "25px",
   },
@@ -142,8 +141,11 @@ const styles = {
     border: "1px solid white",
     backgroundColor: "transparent",
     color: "white",
+    textDecoration: "none",
     cursor: "pointer",
     fontSize: "15px",
+    fontWeight: "bold",
+    display: "inline-block",
   },
 
   card: {
@@ -157,7 +159,7 @@ const styles = {
   },
 
   heading: {
-    textAlign: "center" as const,
+    textAlign: "center",
     color: "#2563eb",
     fontSize: "40px",
     marginBottom: "25px",
@@ -177,7 +179,7 @@ const styles = {
   skillContainer: {
     display: "flex",
     gap: "15px",
-    flexWrap: "wrap" as const,
+    flexWrap: "wrap",
     marginTop: "15px",
   },
 
@@ -207,21 +209,21 @@ const styles = {
     padding: "12px 28px",
     backgroundColor: "#0f172a",
     color: "white",
-    border: "none",
     borderRadius: "30px",
-    cursor: "pointer",
+    textDecoration: "none",
     fontSize: "16px",
     fontWeight: "bold",
+    display: "inline-block",
   },
 
   button: {
     padding: "12px 28px",
     backgroundColor: "#2563eb",
     color: "white",
-    border: "none",
     borderRadius: "30px",
-    cursor: "pointer",
+    textDecoration: "none",
     fontSize: "16px",
     fontWeight: "bold",
+    display: "inline-block",
   },
 };

@@ -17,7 +17,7 @@ export default function HomePage() {
             <button style={styles.navButton}>Portfolio</button>
           </Link>
 
-          <Link href="/portfolio/about">
+          <Link href="/about">
             <button style={styles.navButton}>About</button>
           </Link>
         </div>
@@ -38,7 +38,7 @@ export default function HomePage() {
           </p>
 
           <div style={styles.buttonBox}>
-            <Link href="/portfolio/about">
+            <Link href="/about">
               <button style={styles.primaryButton}>Explore My Portfolio</button>
             </Link>
           </div>
