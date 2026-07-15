@@ -1,144 +1,232 @@
-import Link from "next/link";
+"use client";
 
-const profile = {
-  name: "Simrandeep Kaur",
-  title: "B.Tech CSE Student",
-  semester: "7th Semester",
-};
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
+interface Profile {
+  id: number;
+  name: string;
+  title: string;
+  semester: string;
+  description: string;
+  email: string;
+  phone: string;
+  location: string;
+  github: string;
+  linkedin: string;
+  resume: string;
+  image: string;
+}
 
 export default function HomePage() {
+  const [profile, setProfile] = useState<Profile | null>(null);
+
+  useEffect(() => {
+    async function fetchProfile() {
+      try {
+        const res = await fetch("http://127.0.0.1:8000/api/profile/", {
+          cache: "no-store",
+        });
+
+        const data = await res.json();
+
+        if (data.length > 0) {
+          setProfile(data[0]);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    fetchProfile();
+  }, []);
+
+  if (!profile) {
+    return (
+      <div style={styles.loading}>
+        Loading...
+      </div>
+    );
+  }
+
   return (
     <div style={styles.page}>
+      {/* Navbar */}
       <nav style={styles.navbar}>
-        <h2 style={styles.logo}>My Portfolio</h2>
+        <h2 style={styles.logo}>Portfolio</h2>
 
         <div style={styles.navLinks}>
-          <Link href="/portfolio">
-            <button style={styles.navButton}>Portfolio</button>
+          <Link href="/">
+            <button style={styles.navButton}>Home</button>
           </Link>
-
           <Link href="/about">
             <button style={styles.navButton}>About</button>
           </Link>
         </div>
       </nav>
 
-      <div style={styles.main}>
-        <div style={styles.leftBox}>
-          <p style={styles.smallText}>Hello, I am</p>
-          <h1 style={styles.name}>{profile.name}</h1>
-          <h2 style={styles.title}>{profile.title}</h2>
-          <p style={styles.semester}>{profile.semester}</p>
+      {/* Hero Section */}
+      <div style={styles.hero}>
 
-          <p style={styles.description}>
-            Passionate B.Tech CSE student with a keen interest in Full Stack Web
-            Development. Experienced in HTML, CSS, JavaScript, Python,
-            Bootstrap, Node.js and MySQL, with a focus on building secure,
-            responsive and user-friendly web applications.
+        {/* Left Side */}
+        <div style={styles.leftSection}>
+          <p style={styles.greeting}>👋 Hello, I'm</p>
+
+          <h1 style={styles.name}>
+            {profile.name}
+          </h1>
+
+          <h2 style={styles.title}>
+            {profile.title}
+          </h2>
+
+          <p style={styles.semester}>
+            {profile.semester}
           </p>
 
-          <div style={styles.buttonBox}>
-            <Link href="/about">
-              <button style={styles.primaryButton}>Explore My Portfolio</button>
+          <p style={styles.description}>
+            {profile.description}
+          </p>
+
+          <div style={styles.buttonContainer}>
+
+            <Link href="/">
+              <button style={styles.primaryButton}>
+                View Portfolio
+              </button>
             </Link>
+
           </div>
         </div>
 
-        <div style={styles.rightBox}>
-          <div style={styles.photoCircle}>
-            <img src="/profile.jpeg" alt="Profile" style={styles.image} />
-          </div>
+        {/* Right Side */}
+
+        <div style={styles.rightSection}>
+
         </div>
+
       </div>
+
     </div>
   );
 }
 
 const styles = {
+
+  loading: {
+    minHeight: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    background: "#020617",
+    color: "white",
+    fontSize: "35px",
+    fontWeight: "bold",
+  },
+
   page: {
     minHeight: "100vh",
-    background: "linear-gradient(135deg, #0f172a, #1e3a8a, #2563eb)",
-    fontFamily: "Arial",
+    background: "linear-gradient(135deg,#020617,#0f172a,#1e293b)",
     color: "white",
-    padding: "25px",
+    fontFamily: "Segoe UI, sans-serif",
+    padding: "30px 8%",
   },
 
   navbar: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    marginBottom: "60px",
   },
 
   logo: {
-    margin: 0,
+    fontSize: "32px",
+    color: "#38bdf8",
+    fontWeight: "bold",
     letterSpacing: "1px",
+    margin: 0,
   },
 
   navLinks: {
     display: "flex",
-    gap: "15px",
+    gap: "18px",
   },
 
   navButton: {
-    padding: "10px 18px",
-    borderRadius: "25px",
-    border: "1px solid white",
-    backgroundColor: "transparent",
+    padding: "12px 22px",
+    background: "rgba(255,255,255,0.08)",
     color: "white",
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "30px",
     cursor: "pointer",
     fontSize: "15px",
+    transition: "0.3s",
   },
 
-  main: {
+  hero: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    maxWidth: "1000px",
-    margin: "90px auto 0",
-    gap: "50px",
+    gap: "70px",
+    flexWrap: "wrap" as const,
+    minHeight: "75vh",
   },
 
-  leftBox: {
-    width: "55%",
+  leftSection: {
+    flex: 1,
+    minWidth: "320px",
   },
 
-  smallText: {
+  rightSection: {
+    flex: 1,
+    display: "flex",
+    justifyContent: "center",
+    minWidth: "320px",
+  },
+
+  greeting: {
+    color: "#38bdf8",
     fontSize: "22px",
-    color: "#bfdbfe",
+    marginBottom: "10px",
   },
 
   name: {
-    fontSize: "54px",
+    fontSize: "65px",
+    fontWeight: "bold",
     margin: "10px 0",
-    letterSpacing: "2px",
+    lineHeight: "1.1",
   },
 
   title: {
-    fontSize: "26px",
-    color: "#dbeafe",
+    color: "#60a5fa",
+    fontSize: "34px",
+    marginBottom: "15px",
   },
 
   semester: {
-    fontSize: "18px",
-    color: "#e0f2fe",
+    color: "#cbd5e1",
+    fontSize: "20px",
+    marginBottom: "25px",
   },
 
   description: {
+    color: "#d1d5db",
+    lineHeight: "1.8",
     fontSize: "18px",
-    lineHeight: "1.7",
-    color: "#e2e8f0",
-    marginTop: "25px",
+    maxWidth: "650px",
   },
 
-  buttonBox: {
-    marginTop: "30px",
+  buttonContainer: {
     display: "flex",
+    gap: "20px",
+    marginTop: "40px",
+    flexWrap: "wrap" as const,
   },
 
   primaryButton: {
-    padding: "13px 28px",
-    backgroundColor: "white",
-    color: "#1d4ed8",
+    padding: "15px 35px",
+    background: "#38bdf8",
+    color: "white",
     border: "none",
     borderRadius: "30px",
     fontSize: "16px",
@@ -146,30 +234,36 @@ const styles = {
     cursor: "pointer",
   },
 
-  rightBox: {
-    width: "45%",
-    display: "flex",
-    justifyContent: "center",
+  secondaryButton: {
+    padding: "15px 35px",
+    background: "transparent",
+    color: "#38bdf8",
+    border: "2px solid #38bdf8",
+    borderRadius: "30px",
+    fontSize: "16px",
+    fontWeight: "bold",
+    cursor: "pointer",
   },
 
-  photoCircle: {
-    width: "320px",
-    height: "320px",
-    borderRadius: "50%",
-    backgroundColor: "#fff",
+  imageCard: {
+    width: "390px",
+    height: "390px",
+    borderRadius: "30px",
+    background: "rgba(255,255,255,0.08)",
+    backdropFilter: "blur(18px)",
+    border: "1px solid rgba(255,255,255,0.15)",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    overflow: "hidden",
-    boxShadow: "0 20px 40px rgba(0,0,0,0.35)",
+    boxShadow: "0 0 40px rgba(56,189,248,0.25)",
   },
 
-  image: {
-    width: "100%",
-    height: "100%",
-    objectFit: "cover" as const,
-    objectPosition: "center 25%" as const,
+  profileImage: {
+    width: "320px",
+    height: "320px",
     borderRadius: "50%",
-    border: "6px solid #2563eb",
+    objectFit: "cover" as const,
+    border: "5px solid #38bdf8",
   },
+
 };
